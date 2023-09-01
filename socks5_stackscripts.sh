@@ -1,11 +1,10 @@
 #!/bin/bash
 #<UDF name="port" label="The port of the socks5." default="26188">
-# PORT=
-#
+PORT=$1
 #<UDF name="username" label="The username of the socks5." default="123">
-# USERNAME=
+USERNAME=$2
 #<UDF name="password" label="The password of the socks5." default="123">
-# PASSWORD=
+PASSWORD=$3
 distro=$(cat /etc/os-release | grep -oP '^NAME="\K[^"]+')
 version=$(cat /etc/os-release | grep -oP '^VERSION_ID="\K[^"]+')
 if [[ $distro =~ "Ubuntu" || $distro =~ "Debian" ]]; then
