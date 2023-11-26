@@ -37,7 +37,8 @@ else
 fi
 
 gen_checkpw(){
-	cat > /etc/openvpn/checkpsw.sh <<-EOF
+	# echo "start gen_checkpw"
+	cat > /etc/openvpn/checkpsw.sh <<-"EOF"
 	#!/bin/sh
 	###########################################################
 	# checkpsw.sh (C) 2004 Mathias Sundman 
@@ -76,7 +77,7 @@ gen_checkpw(){
 	chmod 755 /etc/openvpn/checkpsw.sh
 	touch /etc/openvpn/openvpn-password.log
 	chmod 777 /etc/openvpn/openvpn-password.log
-	echo "gen_checkpw complete"
+	# echo "gen_checkpw complete"
 }
 
 randpw(){
@@ -288,7 +289,7 @@ else
 	yum install -y lrzsz
 	# Get easy-rsa
 	wget -O ~/EasyRSA-3.0.4.tgz "https://github.com/OpenVPN/easy-rsa/releases/download/v3.0.4/EasyRSA-3.0.4.tgz"
-	tar xzf ~/EasyRSA-3.0.4.tgz -C ~/
+	tar xvzf ~/EasyRSA-3.0.4.tgz -C ~/
 	mv ~/EasyRSA-3.0.4/ /etc/openvpn/
 	mv /etc/openvpn/EasyRSA-3.0.4/ /etc/openvpn/easy-rsa/
 	chown -R root:root /etc/openvpn/easy-rsa/
