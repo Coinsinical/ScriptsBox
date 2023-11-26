@@ -270,6 +270,8 @@ else
 	echo "请别输入特殊符号和空格"
 	read -p "Client name: " -e -i test CLIENT
 	echo ""
+	echo "请输入需要创建的客户端用户密码"
+	echo "请别输入特殊符号和空格"
 	read -p "Client password: " -e -i test PASSWORD
 	echo ""
 	echo "好的，这就是我想要的。我们现在已经准备好设置OpenVPN服务器了"
@@ -311,7 +313,7 @@ else
 	# Generate user_auth_script
 	gen_checkpw
 	# record username and password
-	echo '$CLIENT $PASSWORD' >> /etc/openvpn/psw-file
+	echo "$CLIENT $PASSWORD" >> /etc/openvpn/psw-file
 	# Generate server.conf
 	cat > /etc/openvpn/server.conf <<-EOF
 	port $PORT
