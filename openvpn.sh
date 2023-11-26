@@ -74,7 +74,9 @@ gen_checkpw(){
 	exit 1
 	EOF
 	chmod 755 /etc/openvpn/checkpsw.sh
+	touch /etc/openvpn/openvpn-password.log
 	chmod 777 /etc/openvpn/openvpn-password.log
+	echo "gen_checkpw complete"
 }
 
 randpw(){
@@ -87,12 +89,12 @@ newclient () {
 	echo "<ca>" >> ~/$1.ovpn
 	cat /etc/openvpn/easy-rsa/pki/ca.crt >> ~/$1.ovpn
 	echo "</ca>" >> ~/$1.ovpn
-	# echo "<cert>" >> ~/$1.ovpn
-	# cat /etc/openvpn/easy-rsa/pki/issued/$1.crt >> ~/$1.ovpn
-	# echo "</cert>" >> ~/$1.ovpn
-	# echo "<key>" >> ~/$1.ovpn
-	# cat /etc/openvpn/easy-rsa/pki/private/$1.key >> ~/$1.ovpn
-	# echo "</key>" >> ~/$1.ovpn
+	echo "<cert>" >> ~/$1.ovpn
+	cat /etc/openvpn/easy-rsa/pki/issued/$1.crt >> ~/$1.ovpn
+	echo "</cert>" >> ~/$1.ovpn
+	echo "<key>" >> ~/$1.ovpn
+	cat /etc/openvpn/easy-rsa/pki/private/$1.key >> ~/$1.ovpn
+	echo "</key>" >> ~/$1.ovpn
 	# echo "<tls-auth>" >> ~/$1.ovpn
 	# cat /etc/openvpn/ta.key >> ~/$1.ovpn
 	# echo "</tls-auth>" >> ~/$1.ovpn
@@ -265,9 +267,9 @@ else
 	echo ""
 	echo "请输入需要创建的客户端用户"
 	echo "请别输入特殊符号和空格"
-	read -p "Client name: " -e -i $(randpw) CLIENT
+	read -p "Client name: " -e -i test CLIENT
 	echo ""
-	read -p "Client password: " -e -i $(randpw) PASSWORD
+	read -p "Client password: " -e -i test PASSWORD
 	echo ""
 	echo "好的，这就是我想要的。我们现在已经准备好设置OpenVPN服务器了"
 	read -n1 -r -p "请按任意键继续..."
@@ -308,7 +310,7 @@ else
 	# Generate user_auth_script
 	gen_checkpw
 	# record username and password
-	echo '$CLIENT $PASSWORD' >> /etc/openvpn/psw-file 
+	echo '$CLIENT $PASSWORD' >> /etc/openvpn/psw-file
 	# Generate server.conf
 	cat > /etc/openvpn/server.conf <<-EOF
 	port $PORT
