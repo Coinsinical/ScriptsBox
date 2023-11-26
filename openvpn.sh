@@ -308,7 +308,7 @@ else
 	# Generate user_auth_script
 	gen_checkpw
 	# record username and password
-	echo $CLIENT $PASSWORD >> /etc/openvpn/psw-file 
+	echo '$CLIENT $PASSWORD' >> /etc/openvpn/psw-file 
 	# Generate server.conf
 	cat > /etc/openvpn/server.conf <<-EOF
 	port $PORT
@@ -371,7 +371,7 @@ else
 	cat >> /etc/openvpn/server.conf <<-EOF
 	keepalive 10 120
 	cipher AES-256-CBC
-	comp-lzo
+	comp-lzo no
 	user nobody
 	group $GROUPNAME
 	persist-key
@@ -479,11 +479,11 @@ exit 0' > $RCLOCAL
 	remote-cert-tls server
 	auth SHA512
 	cipher AES-256-CBC
-	comp-lzo
+	comp-lzo no
 	setenv opt block-outside-dns
 	key-direction 1
 	verb 3
-	auth-user-pass 
+	auth-user-pass
 	EOF
 	# Generates the custom client.ovpn
 	newclient "$CLIENT"
